@@ -1,6 +1,6 @@
 from time import sleep
 
-from prgb_pkg.prgb import Prgb
+from prgb_pkg import Prgb
 
 dict1 = {'a': 10, 'b': 20, 'c': 30}
 
