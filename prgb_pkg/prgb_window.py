@@ -11,7 +11,6 @@ class PrgbWindow(tk.Tk):
 
         self.title('Prgb')
         self.minsize(300, 100)
-        self.last_child_flag = False
         # self.geometry('300x300')
         # self.iconbitmap()
         self.subbars_container = tk.Frame(self)
