@@ -3,23 +3,25 @@ from tkinter import ttk
 
 
 class PrgbWindow(tk.Tk):
-    def __init__(self, add_subbar_event, remove_subbar_event, sync_lock):
-        super().__init__()
-        self.add_subbar_event = add_subbar_event
-        self.remove_subbar_event = remove_subbar_event
-        self.sync_lock = sync_lock
+    CHECK_EVENTS_REFRESH_RATE_ms = 10
 
-        self.title('Prgb')
+    def __init__(self, prgb_obj):
+        super().__init__()
+        self.prgb_obj = prgb_obj
+
+        self.title(f'Prgb v{self.prgb_obj.version}')
         self.minsize(300, 100)
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         # self.geometry('300x300')
         # self.iconbitmap()
         self.subbars_container = tk.Frame(self)
         self.subbars_container.pack(fill=tk.X, expand=1, anchor=tk.N)
 
     def add_subbar(self):
+        title = self.prgb_obj.current_title
         subbar_frame = tk.Frame(self.subbars_container, relief=tk.RAISED, bd=3, height=100)
         subbar_frame.pack(fill=tk.X, expand=1)
-        subbar_title = tk.Label(subbar_frame, text='Progress bar title')
+        subbar_title = tk.Label(subbar_frame, text=title)
         subbar_title.pack(pady=(10, 5))
         progress_bar = ttk.Progressbar(subbar_frame)
         progress_bar.pack(fill=tk.X, expand=1, padx=15)
@@ -33,16 +35,28 @@ class PrgbWindow(tk.Tk):
             self.destroy()
 
     def check_events(self):
-        if self.sync_lock.locked():
-            if self.add_subbar_event.isSet():
+        if self.prgb_obj.sync_lock.locked():
+            if self.prgb_obj.add_subbar_event.isSet():
                 self.add_subbar()
-                self.add_subbar_event.clear()
-            if self.remove_subbar_event.isSet():
+                self.prgb_obj.add_subbar_event.clear()
+            if self.prgb_obj.remove_subbar_event.isSet():
                 self.remove_subbar()
-                self.remove_subbar_event.clear()
-            self.sync_lock.release()
-        self.after(10, self.check_events)
+                self.prgb_obj.remove_subbar_event.clear()
+            self.prgb_obj.sync_lock.release()
+        if not self.prgb_obj.no_window_request.is_set():
+            self.after(self.CHECK_EVENTS_REFRESH_RATE_ms, self.check_events)
 
     def mainloop(self, n=0):
         self.check_events()
+        self.attributes('-topmost', True)
+        self.update()
+        self.attributes('-topmost', False)
         super().mainloop(n)
+
+    def on_closing(self):
+        self.prgb_obj.no_window_request.set()
+        self.prgb_obj.add_subbar_event.clear()
+        self.prgb_obj.remove_subbar_event.clear()
+        if self.prgb_obj.sync_lock.locked():
+            self.prgb_obj.sync_lock.release()
+        self.destroy()
