@@ -15,7 +15,6 @@ class PrgbWindow(tk.Tk):
         # self.iconbitmap()
         self.subbars_container = tk.Frame(self)
         self.subbars_container.pack(fill=tk.X, expand=1, anchor=tk.N)
-        # self.check_events(add_subbar_event, remove_subbar_event, sync_lock)
 
     def add_subbar(self):
         subbar_frame = tk.Frame(self.subbars_container, relief=tk.RAISED, bd=3, height=100)

@@ -1,33 +1,35 @@
 import threading as thd
+from time import sleep
 from typing import Iterable
 
 from prgb_pkg.prgb_window import PrgbWindow
 
 
 class Prgb:
-    _instance = None
+    instance = None
+    version = 0.1
 
     def __new__(cls, source_container: Iterable):
-        if cls._instance is None:
+        if cls.instance is None:
             o = super().__new__(cls)
-            o._window_thread = None
-            cls._instance = o
-        return cls._instance
+            o.window_thread = None
+            cls.instance = o
+        return cls.instance
 
     def __init__(self, source_container: Iterable):
         window_thread_name = 'prgb_window_thread'
 
         self.new_iter = iter(source_container)
-        if self._window_thread is None:
+        if self.window_thread is None:
             self.add_subbar_event = thd.Event()
             self.remove_subbar_event = thd.Event()
             self.sync_lock = thd.Lock()
             self.subbars_amount = 0
-            self._window_thread = thd.Thread(target=self.run_window, name=window_thread_name)
-            self._window_thread.start()
-        elif not self._window_thread.is_alive():
-            self._window_thread = thd.Thread(target=self.run_window, name=window_thread_name)
-            self._window_thread.start()
+            self.window_thread = thd.Thread(target=self.run_window, name=window_thread_name)
+            self.window_thread.start()
+        elif not self.window_thread.is_alive():
+            self.window_thread = thd.Thread(target=self.run_window, name=window_thread_name)
+            self.window_thread.start()
 
     def __iter__(self):
         self.add_subbar_event.set()
@@ -37,7 +39,11 @@ class Prgb:
         return PrgbIter(self)
 
     def run_window(self):
-        window = PrgbWindow(self.add_subbar_event, self.remove_subbar_event, self.sync_lock)
+        window = PrgbWindow(
+            self.add_subbar_event,
+            self.remove_subbar_event,
+            self.sync_lock,
+        )
         window.mainloop()
 
 
@@ -55,4 +61,5 @@ class PrgbIter:
             self.prgb_obj.sync_lock.acquire()
             self.prgb_obj.sync_lock.acquire()
             self.prgb_obj.subbars_amount -= 1
+            sleep(.02)
             raise StopIteration
