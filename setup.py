@@ -1,11 +1,13 @@
 import setuptools
 
+from prgb_pkg.prgb import Prgb
+
 with open('README.md', 'r') as f:
     long_description = f.read()
 
 setuptools.setup(
     name='prgb-pkg',
-    version='0.1',
+    version=Prgb.version,
     author='Piotr Bernaskiewicz',
     author_email='mojczat0@gmail.com',
     maintainer='KodenejmBerni',

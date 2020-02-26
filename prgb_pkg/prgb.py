@@ -7,7 +7,7 @@ from prgb_pkg.prgb_window import PrgbWindow
 
 
 class Prgb:
-    version = 0.1
+    version = '0.2'
     _instance = None
 
     def __new__(cls, *args, **kwargs):

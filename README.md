@@ -1,5 +1,4 @@
 ## Prgb-pkg
-#### Version 0.1
 
 _**(Despite the current project version is 0.x, full functionality of package is already implemented.
 There is a need to check if there are exceptional cases in which package content do not work correctly.
