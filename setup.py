@@ -16,7 +16,6 @@ setuptools.setup(
     project_urls={
         "Source Code": "https://github.com/KodenejmBerni/prgb_pkg",
     },
-    license='GPLv3',
     classifiers=[
         'Programming Language :: Python :: 3',
         'Operating System :: Microsoft :: Windows',
