@@ -11,7 +11,7 @@ setuptools.setup(
     author='Piotr Bernaskiewicz',
     author_email='mojczat0@gmail.com',
     maintainer='KodenejmBerni',
-    description='Simple GUI class, which provides nice looking \'for\' loop progress tracking.',
+    description='Windowed progress bars for loop progress tracking, like in tqdm.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=setuptools.find_packages(),

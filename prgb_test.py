@@ -20,7 +20,7 @@ for x in tqdm(range(3), 'Range bar'):
         for i in tqdm(range(3), '3rd deep'):
             print(f'{x}.{k}: {v}')
             dict1[k] = v + 1
-            sleep(1)
+            sleep(.1)
 
 # for x in Prgb(range(3)):
 #     print(x)
