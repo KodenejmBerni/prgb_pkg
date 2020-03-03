@@ -1,3 +1,4 @@
 from prgb_pkg.prgb import Prgb
 
-__all__ = ['Prgb']
+version = Prgb.version
+__all__ = ['Prgb', 'version']

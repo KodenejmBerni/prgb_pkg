@@ -23,7 +23,7 @@ setuptools.setup(
         'Operating System :: Microsoft :: Windows',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Intended Audience :: Developers',
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Topic :: Software Development',
     ],
     python_requires='>=3.7',
