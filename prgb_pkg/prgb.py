@@ -1,3 +1,4 @@
+import sys
 import threading as thd
 from typing import Iterable
 
@@ -17,12 +18,14 @@ class Prgb:
             cls._instance = o
         return cls._instance
 
-    def __init__(self, source_container: Iterable, title='', *, display_bar=True):
+    def __init__(self, source_container: Iterable, title='', *, display_bar=True, print_summary=False, summary_stream=sys.stdout):
         window_thread_name = 'prgb_window_thread'
 
         self.current_iterator_source_container = source_container
         self.current_iterator_title = title
         self.current_iterator_display_bar = display_bar
+        self.current_iterator_print_summary = print_summary
+        self.current_iterator_summary_stream = summary_stream
         self.current_iterator_id = None
         self.iterator_bar_update_info = {}
 

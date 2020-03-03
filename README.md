@@ -14,8 +14,12 @@ Input iterable object does not have to be `Sized`, but if it is the case
 some progress information can not be obtained.  
 Package does not use any dependiences.
 
+[PyPI website](https://pypi.org/project/prgb-pkg/)  
 [Git project homepage](https://github.com/KodenejmBerni/prgb_pkg)  
 
+![meme_0](imgs/meme_0.jpg)
+
+![meme_1](imgs/meme_1.jpg)
 
 Pip installation:
 ```

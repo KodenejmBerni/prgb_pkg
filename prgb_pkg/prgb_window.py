@@ -63,9 +63,7 @@ class PrgbWindow(tk.Tk):
 
     def mainloop(self, n=0):
         self._check_events()
-        self.attributes('-topmost', True)
-        self.update()
-        self.attributes('-topmost', False)
+        self._move_on_top()
         super().mainloop(n)
 
     def _on_closing(self):
@@ -76,3 +74,8 @@ class PrgbWindow(tk.Tk):
         if self.prgb_obj.sync_lock.locked():
             self.prgb_obj.sync_lock.release()
         self.destroy()
+
+    def _move_on_top(self):
+        self.attributes('-topmost', True)
+        self.update()
+        self.attributes('-topmost', False)

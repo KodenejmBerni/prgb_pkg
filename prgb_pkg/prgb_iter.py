@@ -7,6 +7,8 @@ class PrgbIter:
         self.prgb_obj = prgb_obj
         self.title = prgb_obj.current_iterator_title
         self.has_window = prgb_obj.current_iterator_display_bar
+        self.print_summary = prgb_obj.current_iterator_print_summary
+        self.summary_stream = prgb_obj.current_iterator_summary_stream
         self.id = prgb_obj.current_iterator_id
         if self.has_window:
             prgb_obj.send_signal_add_subbar()
@@ -20,10 +22,10 @@ class PrgbIter:
         self.start_time = datetime.now()
 
     def __next__(self):
+        current_time = datetime.now()
+        run_time = (current_time - self.start_time).total_seconds()
+        run_time_displayed = timedelta(seconds=round(run_time))
         if self.has_window:
-            current_time = datetime.now()
-            run_time = (current_time - self.start_time).total_seconds()
-            run_time_displayed = timedelta(seconds=round(run_time))
             if self.len is None:
                 progress_value = f'{self.step}/unk.\tRun time: {run_time_displayed}'
             else:
@@ -41,6 +43,8 @@ class PrgbIter:
         try:
             return next(self.source_iterator)
         except StopIteration:
+            if self.print_summary:
+                print(f'Title: {self.title}', f'Run time: {run_time_displayed}', f'Finish time: {current_time.replace(microsecond=0)}', sep=', ', file=self.summary_stream)
             self.prgb_obj.iterators_container.popitem()
             if self.has_window:
                 self.prgb_obj.send_signal_remove_subbar()
