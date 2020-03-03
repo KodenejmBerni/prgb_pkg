@@ -10,4 +10,4 @@ for x in Prgb((i for i in range(3)), 'Range bar'):
         for i in Prgb(range(3), '3rd deep'):
             print(f'{x}.{k}: {v}')
             dict1[k] = v + 1
-            sleep(1)
+            sleep(.5)

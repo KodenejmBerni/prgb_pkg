@@ -53,3 +53,10 @@ Prgb(iterable, 'Some hilarious and creative title')
 
 Prgb(iterable, display_bar=False)
 ```
+
+Summary about ending time and totall runtime of chosen bar? No problem:
+```
+with open('example_bar_summary.txt', 'w') as f:
+    for i in Prgb(iterable, print_summary=True, summary_stream=f)
+        ...
+```
